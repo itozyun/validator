@@ -1,5 +1,5 @@
 /**
- * 
+ * 漢数字を数字にする
  * 
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 

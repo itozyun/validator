@@ -1,4 +1,5 @@
 /**
+ * 整数化(Math.trunc です)
  * 
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 

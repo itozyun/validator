@@ -5,7 +5,7 @@
  */
 TransformAndTest_PositiveNumber = function( validatorAction, currentValue, originalValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return 0 <= currentValue
+        return 0 <= currentValue;
     };
     return currentValue;
 };
