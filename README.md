@@ -86,11 +86,9 @@ function( validatorAction, currentValue, originalValue ){
 5. 漢数字を数字にする、これには大字(`零壱弐参伍拾`)を含む
    * TransformAndTest_KansuujiToSuuji
 6. 数字だけを残す
-   * TransformAndTest_cleanupForNumber, TransformAndTest_cleanupForUINT
-7. 正数と負数
-   * TransformAndTest_PositiveNumber, TransformAndTest_NegativeNumber
-8. 整数化(Math.trunc です)
-   * TransformAndTest_Integer
+   * TransformAndTest_ToNumberString, TransformAndTest_ToIntegerString, TransformAndTest_ToUINTString (Integer, UINT は `.` を外して巨大な整数を作る点に注意！)
+7. 整数化(`Math.trunc` です)
+   * TransformAndTest_Trunc
 
 ## エラー文字列
 

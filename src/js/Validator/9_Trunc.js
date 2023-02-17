@@ -5,7 +5,7 @@
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
  */
-TransformAndTest_Integer = function( validatorAction, currentValue, stringValue ){
+TransformAndTest_Trunc = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };

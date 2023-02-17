@@ -5,7 +5,7 @@
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
  */
-TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, stringValue ){
+TransformAndTest_ToNumberString = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
@@ -17,7 +17,7 @@ TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, str
         currentValue = '';
         for( var i = 0, l = str.length, chr; i < l; ++i ){
             chr = str.charAt( i );
-            if( i === 0 && chr === '-' ){
+            if( !currentValue && chr === '-' ){
                 currentValue = '-';
             } else {
                 if( NUMBER_CHARS.indexOf( chr ) !== -1 ){
@@ -28,7 +28,44 @@ TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, str
                 };
             };
         };
-        if( currentValue === '-' || currentValue === '.' ){
+        if( currentValue === '-' || currentValue === '.' || currentValue === '-.' ){
+            currentValue = '';
+        };
+        if( currentValue.charAt( currentValue.length - 1 ) === '.' ){
+            currentValue = currentValue.substr( 0, currentValue.length - 1 );
+        };
+    };
+    return currentValue;
+};
+
+/**
+ * 数字だけを残す. 先頭の - も残す. 1.414 => 1414 になる点に注意
+ * 
+ * @param {number} validatorAction 
+ * @param {string|number|!Date} currentValue 
+ * @param {string} stringValue 
+ */
+TransformAndTest_ToIntegerString = function( validatorAction, currentValue, stringValue ){
+    if( validatorAction === VALIDATOR_ACTION.TEST ){
+        return true;
+    };
+
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var NUMBER_CHARS = '0123456789';
+
+    if( str ){
+        currentValue = '';
+        for( var i = 0, l = str.length, chr; i < l; ++i ){
+            chr = str.charAt( i );
+            if( !currentValue && chr === '-' ){
+                currentValue = '-';
+            } else {
+                if( NUMBER_CHARS.indexOf( chr ) !== -1 ){
+                    currentValue += chr;
+                };
+            };
+        };
+        if( currentValue === '-' ){
             currentValue = '';
         };
     };
@@ -36,13 +73,13 @@ TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, str
 };
 
 /**
- * 0~9だけを残す
+ * 0~9だけを残す. 1.414 => 1414 になる点に注意
  * 
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
  */
-TransformAndTest_cleanupForUINT = function( validatorAction, currentValue, stringValue ){
+TransformAndTest_ToUINTString = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
