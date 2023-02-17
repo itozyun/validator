@@ -6,6 +6,10 @@
  * @param {string} stringValue 
  */
 TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, stringValue ){
+    if( validatorAction === VALIDATOR_ACTION.TEST ){
+        return true;
+    };
+
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var NUMBER_CHARS = '.0123456789';
 
@@ -24,10 +28,9 @@ TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, str
                 };
             };
         };
-    };
-
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return !!currentValue;
+        if( currentValue === '-' || currentValue === '.' ){
+            currentValue = '';
+        };
     };
     return currentValue;
 };
@@ -40,6 +43,10 @@ TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, str
  * @param {string} stringValue 
  */
 TransformAndTest_cleanupForUINT = function( validatorAction, currentValue, stringValue ){
+    if( validatorAction === VALIDATOR_ACTION.TEST ){
+        return true;
+    };
+
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var NUMBER_CHARS = '0123456789';
 
@@ -51,10 +58,6 @@ TransformAndTest_cleanupForUINT = function( validatorAction, currentValue, strin
                 currentValue += chr;
             };
         };
-    };
-
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return !!currentValue;
     };
     return currentValue;
 };
