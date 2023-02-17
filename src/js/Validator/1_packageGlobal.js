@@ -1,6 +1,11 @@
 var StringValidator, NumberValidator, DateValidator;
 
 /**
+ * @typedef {!function((string|number|!Date)):(boolean)}
+ */
+var ValidatorFunction;
+
+/**
  * @typedef {{
  *     gt  : (!Date|number|undefined),
  *     gte : (!Date|number|undefined),

@@ -41,15 +41,16 @@ var validator = new StringValidator(
 ~~~
 ### 引数
 
-| name             | required | data type                                       | deacription                                                                                                 |
-|:-----------------|:---------|:------------------------------------------------|:------------------------------------------------------------------------------------------------------------|
-| `normalizerList` | ✔       | `Normaizer` の配列 または `null`                |                                                                                                             |
-| `positiveRules`  | ✔       | `RangeObject\|RegExp\|Array` と `string` の配列 | RegExp は `regExp.exec(currentValue) != null` で valid. Array は `0<=array.indexOf(currentValue)` で valid. |
-| `negativeRules`  |          | `RegExp\|Array` と `string` の配列              | 上記の場合 invalid. RegExp では続くエラー文字列に `#{$1}` ... `#{$n}` を含めると `match` に置き換えます。   |
+| name             | required | data type                                                          | deacription                                                                                                 |
+|:-----------------|:---------|:-------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------|
+| `normalizerList` | ✔       | `Normaizer` の配列 または `null`                                   |                                                                                                             |
+| `positiveRules`  | ✔       | `ValidatorFunction\|RangeObject\|RegExp\|Array` と `string` の配列 | RegExp は `regExp.exec(currentValue) != null` で valid. Array は `0<=array.indexOf(currentValue)` で valid. |
+| `negativeRules`  |          | `RegExp\|Array` と `string` の配列                                 | 上記の場合 invalid. RegExp では続くエラー文字列に `#{$1}` ... `#{$n}` を含めると `match` に置き換えます。   |
 
 * 最初にノーマライズが行われます。ノーマライズリストの最初から順番に実施します。
 * ルール配列は、最初のものからテストされます。`positiveRules` ⇒ `negativeRules` の順でテストされます。
 * `string` は直前のルール(`RegExp`, `RangeObject`(文字列の最大長や数値や日付けの範囲を指定する), `Array`(入力可能な値のリスト))に不一致の場合のエラーメッセージ。必ずルールからはじまる。
+* negativeRules にも ValidatorFunction, RangeObject は使えますが、positiveRules で処理してしまいましょう。
 
 ## `Normalizer` 関数
 
@@ -80,6 +81,13 @@ function( currentValue, stringValue ){
 7. 整数化(`Math.trunc` です)
    * Normalizer_Trunc
 
+## `ValidatorFunction` 関数
+
+~~~js
+function( currentValue ){
+    return !!currentValue; // boolena;
+};
+~~~
 
 ## `RangeObject` タイプ
 

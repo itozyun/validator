@@ -5,7 +5,7 @@
 /**
  * @constructor
  * @param {Array.<!Normalizer>} normalizeList
- * @param {!Array.<!RegExp|!RangeObject|!Array|string>} positiveRules
+ * @param {!Array.<!RegExp|!RangeObject|!Array|!ValidatorFunction|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
 StringValidator = function( normalizeList, positiveRules, opt_negativeRules ){
@@ -22,7 +22,7 @@ StringValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 /**
  * @constructor
  * @param {Array.<!Normalizer>} normalizeList
- * @param {!Array.<!RegExp|!RangeObject|!Array|string>} positiveRules
+ * @param {!Array.<!RegExp|!RangeObject|!Array|!ValidatorFunction|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
 NumberValidator = function( normalizeList, positiveRules, opt_negativeRules ){
@@ -39,7 +39,7 @@ NumberValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 /**
  * @constructor
  * @param {Array.<!Normalizer>} normalizeList
- * @param {!Array.<!RegExp|!RangeObject|!Array|string>} positiveRules
+ * @param {!Array.<!RegExp|!RangeObject|!Array|!ValidatorFunction|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
 DateValidator = function( normalizeList, positiveRules, opt_negativeRules ){
@@ -68,7 +68,7 @@ function ValidatorBase_isValid( originalValue ){
         i = 0, l = positiveRules.length, rule;
 
     for( i = 0, l = positiveRules.length; i < l; i += 2 ){
-        rule = /** @type {!RegExp|!RangeObject|!Array} */ (positiveRules[ i ]);
+        rule = /** @type {!RegExp|!RangeObject|!Array|!ValidatorFunction} */ (positiveRules[ i ]);
         if( !_isValid( rule, currentValue ) ){
             return false;
         };
@@ -95,7 +95,7 @@ function ValidatorBase_getErrorMessage( originalValue ){
         i = 0, l = positiveRules.length, rule, errorMessage, found;
 
     for( ; i < l; i += 2 ){
-        rule = /** @type {!RegExp|!RangeObject|!Array} */ (positiveRules[ i ]);
+        rule = /** @type {!RegExp|!RangeObject|!Array|!ValidatorFunction} */ (positiveRules[ i ]);
         errorMessage = /** @type {string} */ (positiveRules[ i + 1 ]);
         if( !_isValid( rule, currentValue ) ){
             return errorMessage;
@@ -207,16 +207,19 @@ function m_toNumber( val ){
 
 /**
  * @private
- * @param {!RegExp|!RangeObject|!Array} rule 
+ * @param {!RegExp|!RangeObject|!Array|!ValidatorFunction} rule 
  * @param {string|number|!Date} currentValue 
  * @return {boolean}
  */
 function _isValid( rule, currentValue ){
     if( m_isRegExp( rule ) ){
-        return !!( '' + currentValue ).match( /** @type {RegExp} */ (rule) );
+        return !!( '' + currentValue ).match( /** @type {!RegExp} */ (rule) );
     } else if( m_isArray( rule ) ){
-        return 0 <= /** @type {Array} */ (rule).indexOf( currentValue );
+        return 0 <= /** @type {!Array} */ (rule).indexOf( currentValue );
+    } else if( typeof rule === 'function' ){
+        return /** @type {!ValidatorFunction} */ (rule)( currentValue );
     };
+    // RangeObject ---
     if( m_isString( currentValue ) ){
         currentValue = /** @type {string} */ (currentValue).length;
     };
