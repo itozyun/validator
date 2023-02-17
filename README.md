@@ -81,13 +81,15 @@ function( validatorAction, currentValue, originalValue ){
    * TransformAndTest_HanToZen, TransformAndTest_ZenToHan
 3. 全角ひらがなと全角カタカナの相互変換
    * TransformAndTest_HiraToKataKana, TransformAndTest_KataToHiraKana
-4. 漢数字を数字にする、これには大字(`零壱弐参伍拾`)を含む
+4. 前後の空白文字の削除
+   * TransformAndTest_Trimming
+5. 漢数字を数字にする、これには大字(`零壱弐参伍拾`)を含む
    * TransformAndTest_KansuujiToSuuji
-5. 数字だけを残す
+6. 数字だけを残す
    * TransformAndTest_cleanupForNumber, TransformAndTest_cleanupForUINT
-6. 正数と負数
+7. 正数と負数
    * TransformAndTest_PositiveNumber, TransformAndTest_NegativeNumber
-7. 整数化(Math.trunc です)
+8. 整数化(Math.trunc です)
    * TransformAndTest_Integer
 
 ## エラー文字列
