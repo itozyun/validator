@@ -10,7 +10,7 @@ TransformAndTest_HalfToFull = function( validatorAction, currentValue, stringVal
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){
         return str.replace(
@@ -35,7 +35,7 @@ TransformAndTest_FullToHalf = function( validatorAction, currentValue, stringVal
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){
         return str.replace(

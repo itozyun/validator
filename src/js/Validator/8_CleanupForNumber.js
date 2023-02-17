@@ -6,7 +6,7 @@
  * @param {string} stringValue 
  */
 TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var NUMBER_CHARS = '.0123456789';
 
     if( str ){
@@ -40,7 +40,7 @@ TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, str
  * @param {string} stringValue 
  */
 TransformAndTest_cleanupForUINT = function( validatorAction, currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var NUMBER_CHARS = '0123456789';
 
     if( str ){

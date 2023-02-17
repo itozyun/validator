@@ -10,7 +10,7 @@ TransformAndTest_HanToZen = function( validatorAction, currentValue, stringValue
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){
         for( var i = 0, l = HANKAKU_KANA_LIST.length; i < l; ++i ){
@@ -33,7 +33,7 @@ TransformAndTest_ZenToHan = function( validatorAction, currentValue, stringValue
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){
         for( var i = 0, l = ZENKAKU_KANA_LIST.length; i < l; ++i ){
