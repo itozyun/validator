@@ -5,9 +5,9 @@
  *   
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_HiraToKataKana = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_HiraToKataKana = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
@@ -27,9 +27,9 @@ TransformAndTest_HiraToKataKana = function( validatorAction, currentValue, origi
  *   
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_KataToHiraKana = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_KataToHiraKana = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };

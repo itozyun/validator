@@ -4,13 +4,13 @@
  *   半角数字を全角数字に変換
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_HalfToFull = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_HalfToFull = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( originalValue ) ? originalValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
 
     if( str ){
         return str.replace(
@@ -29,13 +29,13 @@ TransformAndTest_HalfToFull = function( validatorAction, currentValue, originalV
  *   全角英数字を半角英数字に変換
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_FullToHalf = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_FullToHalf = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( originalValue ) ? originalValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
 
     if( str ){
         return str.replace(

@@ -3,14 +3,14 @@
  * 
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_KansuujiToSuuji = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_KansuujiToSuuji = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
 
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( originalValue ) ? originalValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
     var DAIJI_LIST = '零壱弐参四伍六七八九拾'.split( '' );
     var KANSUUJI_LIST = '〇一二三四五六七八九十'.split( '' );
 

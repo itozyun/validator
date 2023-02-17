@@ -13,7 +13,7 @@ var TransformAndTest;
  *     lte : (!Date|number|undefined)
  * }}
  */
-var RangeDefinitions;
+var RangeObject;
 
 var TransformAndTest_HalfToFull,
     TransformAndTest_FullToHalf,

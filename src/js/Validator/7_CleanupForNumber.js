@@ -3,10 +3,10 @@
  * 
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, originalValue ){
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( originalValue ) ? originalValue : '';
+TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, stringValue ){
+    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
     var NUMBER_CHARS = '.0123456789';
 
     if( str ){
@@ -37,10 +37,10 @@ TransformAndTest_cleanupForNumber = function( validatorAction, currentValue, ori
  * 
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_cleanupForUINT = function( validatorAction, currentValue, originalValue ){
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( originalValue ) ? originalValue : '';
+TransformAndTest_cleanupForUINT = function( validatorAction, currentValue, stringValue ){
+    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
     var NUMBER_CHARS = '0123456789';
 
     if( str ){

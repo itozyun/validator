@@ -3,9 +3,9 @@
  * 
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_Integer = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_Integer = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };

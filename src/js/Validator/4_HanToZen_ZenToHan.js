@@ -4,13 +4,13 @@
  *   半角カナを全角カナに変換
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_HanToZen = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_HanToZen = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( originalValue ) ? originalValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
 
     if( str ){
         for( var i = 0, l = HANKAKU_KANA_LIST.length; i < l; ++i ){
@@ -27,13 +27,13 @@ TransformAndTest_HanToZen = function( validatorAction, currentValue, originalVal
  *   全角カナを半角カナに変換
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
- * @param {string} originalValue 
+ * @param {string} stringValue 
  */
-TransformAndTest_ZenToHan = function( validatorAction, currentValue, originalValue ){
+TransformAndTest_ZenToHan = function( validatorAction, currentValue, stringValue ){
     if( validatorAction === VALIDATOR_ACTION.TEST ){
         return true;
     };
-    var str = m_isString( currentValue ) ?  currentValue : m_isString( originalValue ) ? originalValue : '';
+    var str = m_isString( currentValue ) ?  currentValue : m_isString( stringValue ) ? stringValue : '';
 
     if( str ){
         for( var i = 0, l = ZENKAKU_KANA_LIST.length; i < l; ++i ){
