@@ -4,48 +4,54 @@
 
 /**
  * @constructor
- * @param {!Array.<!TransformAndTest|!RegExp|!RangeObject|!Array|string>} positiveRules
+ * @param {Array.<!Normalizer>} normalizeList
+ * @param {!Array.<!RegExp|!RangeObject|!Array|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
-StringValidator = function( positiveRules, opt_negativeRules ){
+StringValidator = function( normalizeList, positiveRules, opt_negativeRules ){
     this._checkType     = m_isString;
     this._castBy        = String;
+    this._normalizeList = normalizeList;
     this._positiveRules = positiveRules;
     this._negativeRules = opt_negativeRules;
 };
-StringValidator.prototype.isValid             = ValidatorBase_isValid;
-StringValidator.prototype.getErrorMessage     = ValidatorBase_getErrorMessage;
-StringValidator.prototype.getTransformedValue = ValidatorBase_getTransformedValue;
+StringValidator.prototype.isValid            = ValidatorBase_isValid;
+StringValidator.prototype.getErrorMessage    = ValidatorBase_getErrorMessage;
+StringValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 
 /**
  * @constructor
- * @param {!Array.<!TransformAndTest|!RegExp|!RangeObject|!Array|string>} positiveRules
+ * @param {Array.<!Normalizer>} normalizeList
+ * @param {!Array.<!RegExp|!RangeObject|!Array|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
-NumberValidator = function( positiveRules, opt_negativeRules ){
+NumberValidator = function( normalizeList, positiveRules, opt_negativeRules ){
     this._checkType     = m_isNumber;
     this._castBy        = m_toNumber;
+    this._normalizeList = normalizeList;
     this._positiveRules = positiveRules;
     this._negativeRules = opt_negativeRules;
 };
-NumberValidator.prototype.isValid             = ValidatorBase_isValid;
-NumberValidator.prototype.getErrorMessage     = ValidatorBase_getErrorMessage;
-NumberValidator.prototype.getTransformedValue = ValidatorBase_getTransformedValue;
+NumberValidator.prototype.isValid            = ValidatorBase_isValid;
+NumberValidator.prototype.getErrorMessage    = ValidatorBase_getErrorMessage;
+NumberValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 
 /**
  * @constructor
- * @param {!Array.<!TransformAndTest|!RegExp|!RangeObject|!Array|string>} positiveRules
+ * @param {Array.<!Normalizer>} normalizeList
+ * @param {!Array.<!RegExp|!RangeObject|!Array|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
-DateValidator = function( positiveRules, opt_negativeRules ){
+DateValidator = function( normalizeList, positiveRules, opt_negativeRules ){
     this._checkType     = m_isDate;
     this._castBy        = Date;
+    this._normalizeList = normalizeList;
     this._positiveRules = positiveRules;
     this._negativeRules = opt_negativeRules;
 };
-DateValidator.prototype.isValid             = ValidatorBase_isValid;
-DateValidator.prototype.getErrorMessage     = ValidatorBase_getErrorMessage;
-DateValidator.prototype.getTransformedValue = ValidatorBase_getTransformedValue;
+DateValidator.prototype.isValid            = ValidatorBase_isValid;
+DateValidator.prototype.getErrorMessage    = ValidatorBase_getErrorMessage;
+DateValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 
 /*=============================================================================
  * 2. Methods
@@ -56,30 +62,21 @@ DateValidator.prototype.getTransformedValue = ValidatorBase_getTransformedValue;
  * @return {boolean}
  */
 function ValidatorBase_isValid( originalValue ){
-    var stringValue  = originalValue,
-        currentValue = /** @type {string|number|!Date} */ (this._castBy( stringValue )),
+    var currentValue  = /** @type {string|number|!Date} */ (this.getNormalizedValue( originalValue )),
         positiveRules = this._positiveRules,
         negativeRules = this._negativeRules,
         i = 0, l = positiveRules.length, rule;
 
-    for( ; i < l; i += 2 ){
-        rule = /** @type {!TransformAndTest|!RegExp|!RangeObject|!Array} */ (positiveRules[ i ]);
-        if( !_isValid( rule, currentValue, stringValue ) ){
+    for( i = 0, l = positiveRules.length; i < l; i += 2 ){
+        rule = /** @type {!RegExp|!RangeObject|!Array} */ (positiveRules[ i ]);
+        if( !_isValid( rule, currentValue ) ){
             return false;
-        };
-        currentValue = _getTransformedValue( rule, currentValue, stringValue );
-        if( !this._checkType( currentValue ) ){
-            stringValue  = '' + currentValue;
-            currentValue = this._castBy( currentValue );
-        };
-        if( !m_isString( positiveRules[ i + 1 ] ) ){
-            --i;
         };
     };
     if( negativeRules ){
         for( i = 0, l = negativeRules.length; i < l; i += 2 ){
             rule = /** @type {!RegExp|!Array} */ (negativeRules[ i ]);
-            if( _isValid( rule, currentValue, stringValue ) ){
+            if( _isValid( rule, currentValue ) ){
                 return false;
             };
         };
@@ -92,39 +89,23 @@ function ValidatorBase_isValid( originalValue ){
  * @return {string}
  */
 function ValidatorBase_getErrorMessage( originalValue ){
-    var stringValue  = originalValue,
-        currentValue = /** @type {string|number|!Date} */ (this._castBy( stringValue )),
+    var currentValue  = /** @type {string|number|!Date} */ (this.getNormalizedValue( originalValue )),
         positiveRules = this._positiveRules,
         negativeRules = this._negativeRules,
-        i = 0, l = positiveRules.length, rule, maybeErrorMessage, isErrorMessage, errorMessage, found;
+        i = 0, l = positiveRules.length, rule, errorMessage, found;
 
     for( ; i < l; i += 2 ){
-        rule  = /** @type {!TransformAndTest|!RegExp|!RangeObject|!Array} */ (positiveRules[ i ]);
-        maybeErrorMessage = /** @type {!TransformAndTest|!RegExp|!RangeObject|!Array|string|undefined} */ (positiveRules[ i + 1 ]);
-        isErrorMessage    = m_isString( maybeErrorMessage );
-        if( !_isValid( rule, currentValue, stringValue ) ){
-            if( isErrorMessage ){
-                maybeErrorMessage = /** @type {string} */ (maybeErrorMessage);
-                return maybeErrorMessage;
-            };
-            if( DEFINE_VALIDATOR__UNKNOWN_ERROR_MESSAGE ){
-                return DEFINE_VALIDATOR__UNKNOWN_ERROR_MESSAGE;
-            };
-        };
-        currentValue = _getTransformedValue( rule, currentValue, stringValue );
-        if( !this._checkType( currentValue ) ){
-            stringValue  = '' + currentValue;
-            currentValue = this._castBy( currentValue );
-        };
-        if( !isErrorMessage ){
-            --i;
+        rule = /** @type {!RegExp|!RangeObject|!Array} */ (positiveRules[ i ]);
+        errorMessage = /** @type {string} */ (positiveRules[ i + 1 ]);
+        if( !_isValid( rule, currentValue ) ){
+            return errorMessage;
         };
     };
     if( negativeRules ){
         for( i = 0, l = negativeRules.length; i < l; i += 2 ){
             rule = /** @type {!RegExp|!Array} */ (negativeRules[ i ]);
             errorMessage = /** @type {string} */ (negativeRules[ i + 1 ]);
-            if( _isValid( rule, currentValue, stringValue ) ){
+            if( _isValid( rule, currentValue ) ){
                 if( m_isRegExp( rule ) ){
                     found = ( '' + currentValue ).match( rule );
                     for( i = 0, l = found.length; i < l; ++i ){
@@ -143,59 +124,79 @@ function ValidatorBase_getErrorMessage( originalValue ){
  * @param {string} originalValue 
  * @return {string|number|!Date|undefined}
  */
-function ValidatorBase_getTransformedValue( originalValue ){
-    var stringValue  = originalValue,
-        currentValue = /** @type {string|number|!Date} */ (this._castBy( stringValue )),
-        positiveRules = this._positiveRules,
-        i = 0, l = positiveRules.length, rule;
+function ValidatorBase_getNormalizedValue( originalValue ){
+    var stringValue   = originalValue,
+        currentValue  = /** @type {string|number|!Date} */ (this._castBy( stringValue )),
+        normalizeList = this._normalizeList,
+        i = 0, l, normalize;
 
-    for( ; i < l; i += 2 ){
-        rule = /** @type {!TransformAndTest|!RegExp|!RangeObject|!Array} */ (positiveRules[ i ]);
-        if( !_isValid( rule, currentValue, stringValue ) ){
-            return;
-        };
-        currentValue = _getTransformedValue( rule, currentValue, stringValue );
-        if( !this._checkType( currentValue ) ){
-            stringValue  = '' + currentValue;
-            currentValue = this._castBy( currentValue );
-        };
-        if( !m_isString( positiveRules[ i + 1 ] ) ){
-            --i;
+    if( normalizeList ){
+        for( l = normalizeList.length; i < l; ++i ){
+            normalize = /** @type {!Normalizer} */ (normalizeList[ i ]);
+            currentValue = normalize( currentValue, stringValue );
+            if( !this._checkType( currentValue ) ){
+                stringValue  = '' + currentValue;
+                currentValue = this._castBy( currentValue );
+            };
         };
     };
-    return /** @type {string|number|!Date} */ (this._castBy( currentValue ));
+    return /** @type {string|number|!Date} */ (currentValue);
 };
 
 /*=============================================================================
  * 3. module global
  */
 
+/**
+ * @param {*} str 
+ * @return {boolean}
+ */
 function m_isString( str ){
     return str === '' + str;
 };
 
+/**
+ * @param {*} array 
+ * @return {boolean}
+ */
 function m_isArray( array ){
     return array.pop === [].pop;
 };
 
+/**
+ * @param {*} regexp 
+ * @return {boolean}
+ */
 function m_isRegExp( regexp ){
     return regexp.constructor === RegExp;
 };
 
+/**
+ * @param {*} num 
+ * @return {boolean}
+ */
 function m_isNumber( num ){
-    return num - 0 === num;
+    return /** @type {number} */ (num) - 0 === num;
 };
 
+/**
+ * @param {*} date 
+ * @return {boolean}
+ */
 function m_isDate( date ){
     return date.constructor === Date;
 };
 
 var m_String_fromCharCode = String.fromCharCode;
 
+/**
+ * @param {*} val 
+ * @return {number}
+ */
 function m_toNumber( val ){
     // Number("") === 0, parseFloat("0a") === 0 なので、ダブルチェックで数値文字列かを判断する
     if( Number( val ) === parseFloat( val ) ){
-        return val - 0;
+        return /** @type {number} */ (val) - 0;
     };
     return NaN;
 };
@@ -206,37 +207,20 @@ function m_toNumber( val ){
 
 /**
  * @private
- * @param {!TransformAndTest|!RegExp|!RangeObject|!Array} rule 
+ * @param {!RegExp|!RangeObject|!Array} rule 
  * @param {string|number|!Date} currentValue 
- * @param {string} stringValue 
  * @return {boolean}
  */
-function _isValid( rule, currentValue, stringValue ){
+function _isValid( rule, currentValue ){
     if( m_isRegExp( rule ) ){
         return !!( '' + currentValue ).match( /** @type {RegExp} */ (rule) );
     } else if( m_isArray( rule ) ){
         return 0 <= /** @type {Array} */ (rule).indexOf( currentValue );
-    } else if( typeof rule === 'object' ){
-        if( m_isString( currentValue ) ){
-            currentValue = /** @type {string} */ (currentValue).length;
-        };
-        currentValue = /** @type {!Date|number} */ (currentValue);
-        rule = /** @type {!RangeObject} */ (rule);
-        return !( currentValue <= rule.gt || currentValue < rule.gte || rule.lt <= currentValue || rule.lte < currentValue );
     };
-    return !!/** @type {!TransformAndTest} */ (rule)( VALIDATOR_ACTION.TEST, currentValue, stringValue );
-};
-
-/**
- * @private
- * @param {!TransformAndTest|!RegExp|!RangeObject|!Array} rule 
- * @param {string|number|!Date} currentValue 
- * @param {string} stringValue 
- * @return {string|number|!Date}
- */
-function _getTransformedValue( rule, currentValue, stringValue ){
-    if( typeof rule === 'function' ){
-        return rule( VALIDATOR_ACTION.TRANSFORM, currentValue, stringValue );
+    if( m_isString( currentValue ) ){
+        currentValue = /** @type {string} */ (currentValue).length;
     };
-    return currentValue;
+    currentValue = /** @type {!Date|number} */ (currentValue);
+    rule = /** @type {!RangeObject} */ (rule);
+    return !( currentValue <= rule.gt || currentValue < rule.gte || rule.lt <= currentValue || rule.lte < currentValue );
 };

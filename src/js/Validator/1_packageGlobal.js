@@ -1,11 +1,6 @@
 var StringValidator, NumberValidator, DateValidator;
 
 /**
- * @typedef {!function(number, *, *):*}
- */
-var TransformAndTest;
-
-/**
  * @typedef {{
  *     gt  : (!Date|number|undefined),
  *     gte : (!Date|number|undefined),
@@ -15,10 +10,32 @@ var TransformAndTest;
  */
 var RangeObject;
 
-var TransformAndTest_HalfToFull, TransformAndTest_FullToHalf,
-    TransformAndTest_HanToZen, TransformAndTest_ZenToHan,
-    TransformAndTest_HiraToKataKana, TransformAndTest_KataToHiraKana,
-    TransformAndTest_Trimming,
-    TransformAndTest_KansuujiToSuuji,
-    TransformAndTest_ToNumberString, TransformAndTest_ToIntegerString, TransformAndTest_ToUINTString,
-    TransformAndTest_Trunc;
+/**
+ * @typedef {!function((string|number|!Date), string):(string|number|!Date)}
+ */
+var Normalizer;
+
+/** @type {!Normalizer|undefined} */
+var Normalizer_HalfToFull;
+/** @type {!Normalizer|undefined} */
+var Normalizer_FullToHalf;
+/** @type {!Normalizer|undefined} */
+var Normalizer_HanToZen;
+/** @type {!Normalizer|undefined} */
+var Normalizer_ZenToHan;
+/** @type {!Normalizer|undefined} */
+var Normalizer_HiraToKataKana;
+/** @type {!Normalizer|undefined} */
+var Normalizer_KataToHiraKana;
+/** @type {!Normalizer|undefined} */
+var Normalizer_Trimming;
+/** @type {!Normalizer|undefined} */
+var Normalizer_KansuujiToSuuji;
+/** @type {!Normalizer|undefined} */
+var Normalizer_ToNumberString;
+/** @type {!Normalizer|undefined} */
+var Normalizer_ToIntegerString;
+/** @type {!Normalizer|undefined} */
+var Normalizer_ToUINTString;
+/** @type {!Normalizer|undefined} */
+var Normalizer_Trunc;

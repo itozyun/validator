@@ -2,14 +2,11 @@
  * original
  *   https://minory.org/js-full-half-width.html
  *   半角カナを全角カナに変換
- * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_HanToZen = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
+Normalizer_HanToZen = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){
@@ -25,14 +22,12 @@ TransformAndTest_HanToZen = function( validatorAction, currentValue, stringValue
  * original
  *   https://minory.org/js-full-half-width.html
  *   全角カナを半角カナに変換
- * @param {number} validatorAction 
+ * 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_ZenToHan = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
+Normalizer_ZenToHan = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){

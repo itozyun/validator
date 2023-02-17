@@ -1,15 +1,11 @@
 /**
  * 数字だけを残す. 先頭の - と最初の . も残す
  * 
- * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_ToNumberString = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
-
+Normalizer_ToNumberString = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var NUMBER_CHARS = '.0123456789';
 
@@ -41,15 +37,11 @@ TransformAndTest_ToNumberString = function( validatorAction, currentValue, strin
 /**
  * 数字だけを残す. 先頭の - も残す. 1.414 => 1414 になる点に注意
  * 
- * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_ToIntegerString = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
-
+Normalizer_ToIntegerString = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var NUMBER_CHARS = '0123456789';
 
@@ -75,15 +67,11 @@ TransformAndTest_ToIntegerString = function( validatorAction, currentValue, stri
 /**
  * 0~9だけを残す. 1.414 => 1414 になる点に注意
  * 
- * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_ToUINTString = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
-
+Normalizer_ToUINTString = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var NUMBER_CHARS = '0123456789';
 

@@ -1,15 +1,11 @@
 /**
  * 漢数字を数字にする
  * 
- * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_KansuujiToSuuji = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
-
+Normalizer_KansuujiToSuuji = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
     var DAIJI_LIST = '零壱弐参四伍六七八九拾'.split( '' );
     var KANSUUJI_LIST = '〇一二三四五六七八九十'.split( '' );

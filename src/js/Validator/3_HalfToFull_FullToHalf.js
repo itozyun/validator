@@ -2,14 +2,12 @@
  * original
  *   https://minory.org/js-full-half-width.html
  *   半角英数字を全角英数字に変換
- * @param {number} validatorAction 
+ * 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_HalfToFull = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
+Normalizer_HalfToFull = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){
@@ -27,14 +25,12 @@ TransformAndTest_HalfToFull = function( validatorAction, currentValue, stringVal
  * original
  *   https://minory.org/js-full-half-width.html
  *   全角英数字を半角英数字に変換
- * @param {number} validatorAction 
+ *
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_FullToHalf = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
+Normalizer_FullToHalf = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){

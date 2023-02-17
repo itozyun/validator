@@ -2,15 +2,12 @@
  * original
  *   https://gist.github.com/kawanet/5553478
  *   カタカナをひらがなに変換する JavaScript 関数、 ひらがなをカタカナに変換する JavaScript 関数 
- *   
- * @param {number} validatorAction 
+ * 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_HiraToKataKana = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
+Normalizer_HiraToKataKana = function( currentValue, stringValue ){
     return currentValue.replace(
         /[\u3041-\u3096]/g,
         function( match ){
@@ -24,15 +21,12 @@ TransformAndTest_HiraToKataKana = function( validatorAction, currentValue, strin
  * original
  *   https://gist.github.com/kawanet/5553478
  *   カタカナをひらがなに変換する JavaScript 関数、 ひらがなをカタカナに変換する JavaScript 関数 
- *   
- * @param {number} validatorAction 
+ * 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
+ * @return {string|number|!Date}
  */
-TransformAndTest_KataToHiraKana = function( validatorAction, currentValue, stringValue ){
-    if( validatorAction === VALIDATOR_ACTION.TEST ){
-        return true;
-    };
+Normalizer_KataToHiraKana = function( currentValue, stringValue ){
     return currentValue.replace(
         /[\u30a1-\u30f6]/g,
         function( match ){
