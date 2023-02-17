@@ -9,12 +9,12 @@
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
 StringValidator = function( normalizeList, positiveRules, opt_negativeRules ){
-    this._checkType     = m_isString;
-    this._castBy        = String;
     this._normalizeList = normalizeList;
     this._positiveRules = positiveRules;
     this._negativeRules = opt_negativeRules;
 };
+StringValidator.prototype._checkType         = m_isString;
+StringValidator.prototype._stringTo          = String;
 StringValidator.prototype.isValid            = ValidatorBase_isValid;
 StringValidator.prototype.getErrorMessage    = ValidatorBase_getErrorMessage;
 StringValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
@@ -26,12 +26,12 @@ StringValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
 NumberValidator = function( normalizeList, positiveRules, opt_negativeRules ){
-    this._checkType     = m_isNumber;
-    this._castBy        = m_toNumber;
     this._normalizeList = normalizeList;
     this._positiveRules = positiveRules;
     this._negativeRules = opt_negativeRules;
 };
+NumberValidator.prototype._checkType         = m_isNumber;
+NumberValidator.prototype._stringTo          = m_toNumber;
 NumberValidator.prototype.isValid            = ValidatorBase_isValid;
 NumberValidator.prototype.getErrorMessage    = ValidatorBase_getErrorMessage;
 NumberValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
@@ -43,18 +43,18 @@ NumberValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
 DateValidator = function( normalizeList, positiveRules, opt_negativeRules ){
-    this._checkType     = m_isDate;
-    this._castBy        = Date;
     this._normalizeList = normalizeList;
     this._positiveRules = positiveRules;
     this._negativeRules = opt_negativeRules;
 };
+DateValidator.prototype._checkType         = m_isDate;
+DateValidator.prototype._stringTo          = Date;
 DateValidator.prototype.isValid            = ValidatorBase_isValid;
 DateValidator.prototype.getErrorMessage    = ValidatorBase_getErrorMessage;
 DateValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 
 /*=============================================================================
- * 2. Methods
+ * 2. Public Methods
  */
 
 /**
@@ -126,7 +126,7 @@ function ValidatorBase_getErrorMessage( originalValue ){
  */
 function ValidatorBase_getNormalizedValue( originalValue ){
     var stringValue   = originalValue,
-        currentValue  = /** @type {string|number|!Date} */ (this._castBy( stringValue )),
+        currentValue  = /** @type {string|number|!Date} */ (this._stringTo( stringValue )),
         normalizeList = this._normalizeList,
         i = 0, l, normalize;
 
@@ -136,7 +136,7 @@ function ValidatorBase_getNormalizedValue( originalValue ){
             currentValue = normalize( currentValue, stringValue );
             if( !this._checkType( currentValue ) ){
                 stringValue  = '' + currentValue;
-                currentValue = this._castBy( currentValue );
+                currentValue = this._stringTo( currentValue );
             };
         };
     };
