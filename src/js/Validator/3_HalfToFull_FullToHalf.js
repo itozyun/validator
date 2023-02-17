@@ -1,7 +1,7 @@
 /**
  * original
  *   https://minory.org/js-full-half-width.html
- *   半角数字を全角数字に変換
+ *   半角英数字を全角英数字に変換
  * @param {number} validatorAction 
  * @param {string|number|!Date} currentValue 
  * @param {string} stringValue 
