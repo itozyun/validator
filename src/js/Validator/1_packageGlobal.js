@@ -25,9 +25,9 @@ var Normalizer_HalfToFull;
 /** @type {!Normalizer|undefined} */
 var Normalizer_FullToHalf;
 /** @type {!Normalizer|undefined} */
-var Normalizer_HanToZen;
+var Normalizer_HanKakuKanaToZen;
 /** @type {!Normalizer|undefined} */
-var Normalizer_ZenToHan;
+var Normalizer_ZenKakuKanaToHan;
 /** @type {!Normalizer|undefined} */
 var Normalizer_HiraToKataKana;
 /** @type {!Normalizer|undefined} */

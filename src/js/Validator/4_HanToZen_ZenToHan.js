@@ -6,7 +6,7 @@
  * @param {string} stringValue 
  * @return {string|number|!Date}
  */
-Normalizer_HanToZen = function( currentValue, stringValue ){
+Normalizer_HanKakuKanaToZen = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){
@@ -27,7 +27,7 @@ Normalizer_HanToZen = function( currentValue, stringValue ){
  * @param {string} stringValue 
  * @return {string|number|!Date}
  */
-Normalizer_ZenToHan = function( currentValue, stringValue ){
+Normalizer_ZenKakuKanaToHan = function( currentValue, stringValue ){
     var str = m_isString( currentValue ) ?  currentValue : stringValue;
 
     if( str ){

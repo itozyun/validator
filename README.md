@@ -69,7 +69,7 @@ function( currentValue, stringValue ){
 1. 全角英数字と半角英数字の相互変換
    * Normalizer_HalfToFull, Normalizer_FullToHalf
 2. 半角カナと全角カナの相互変換
-   * Normalizer_HanToZen, Normalizer_ZenToHan
+   * Normalizer_HanKakuKanaToZen, Normalizer_ZenKakuKanaToHan
 3. 全角ひらがなと全角カタカナの相互変換
    * Normalizer_HiraToKataKana, Normalizer_KataToHiraKana
 4. 前後の空白文字の削除
