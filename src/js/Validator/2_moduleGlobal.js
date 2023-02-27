@@ -4,14 +4,14 @@
 
 /**
  * @constructor
- * @param {Array.<!Normalizer>} normalizeList
+ * @param {Array.<!Normalizer>} normalizerList
  * @param {!Array.<!RegExp|!RangeObject|!Array|!ValidatorFunction|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
-StringValidator = function( normalizeList, positiveRules, opt_negativeRules ){
-    this._normalizeList = normalizeList;
-    this._positiveRules = positiveRules;
-    this._negativeRules = opt_negativeRules;
+StringValidator = function( normalizerList, positiveRules, opt_negativeRules ){
+    this._normalizerList = normalizerList;
+    this._positiveRules  = positiveRules;
+    this._negativeRules  = opt_negativeRules;
 };
 StringValidator.prototype._checkType         = m_isString;
 StringValidator.prototype._stringTo          = String;
@@ -21,14 +21,14 @@ StringValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 
 /**
  * @constructor
- * @param {Array.<!Normalizer>} normalizeList
+ * @param {Array.<!Normalizer>} normalizerList
  * @param {!Array.<!RegExp|!RangeObject|!Array|!ValidatorFunction|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
-NumberValidator = function( normalizeList, positiveRules, opt_negativeRules ){
-    this._normalizeList = normalizeList;
-    this._positiveRules = positiveRules;
-    this._negativeRules = opt_negativeRules;
+NumberValidator = function( normalizerList, positiveRules, opt_negativeRules ){
+    this._normalizerList = normalizerList;
+    this._positiveRules  = positiveRules;
+    this._negativeRules  = opt_negativeRules;
 };
 NumberValidator.prototype._checkType         = m_isNumber;
 NumberValidator.prototype._stringTo          = m_toNumber;
@@ -38,14 +38,14 @@ NumberValidator.prototype.getNormalizedValue = ValidatorBase_getNormalizedValue;
 
 /**
  * @constructor
- * @param {Array.<!Normalizer>} normalizeList
+ * @param {Array.<!Normalizer>} normalizerList
  * @param {!Array.<!RegExp|!RangeObject|!Array|!ValidatorFunction|string>} positiveRules
  * @param {!Array.<!RegExp|!Array|string>=} opt_negativeRules
  */
-DateValidator = function( normalizeList, positiveRules, opt_negativeRules ){
-    this._normalizeList = normalizeList;
-    this._positiveRules = positiveRules;
-    this._negativeRules = opt_negativeRules;
+DateValidator = function( normalizerList, positiveRules, opt_negativeRules ){
+    this._normalizerList = normalizerList;
+    this._positiveRules  = positiveRules;
+    this._negativeRules  = opt_negativeRules;
 };
 DateValidator.prototype._checkType         = m_isDate;
 DateValidator.prototype._stringTo          = Date;
@@ -125,15 +125,14 @@ function ValidatorBase_getErrorMessage( originalValue ){
  * @return {string|number|!Date|undefined}
  */
 function ValidatorBase_getNormalizedValue( originalValue ){
-    var stringValue   = originalValue,
-        currentValue  = /** @type {string|number|!Date} */ (this._stringTo( stringValue )),
-        normalizeList = this._normalizeList,
-        i = 0, l, normalize;
+    var stringValue    = originalValue,
+        currentValue   = /** @type {string|number|!Date} */ (this._stringTo( stringValue )),
+        normalizerList = this._normalizerList,
+        i = 0, l;
 
-    if( normalizeList ){
-        for( l = normalizeList.length; i < l; ++i ){
-            normalize = /** @type {!Normalizer} */ (normalizeList[ i ]);
-            currentValue = normalize( currentValue, stringValue );
+    if( normalizerList ){
+        for( l = normalizerList.length; i < l; ++i ){
+            currentValue = /** @type {!Normalizer} */ (normalizerList[ i ])( currentValue, stringValue );
             if( !this._checkType( currentValue ) ){
                 stringValue  = '' + currentValue;
                 currentValue = this._stringTo( currentValue );
