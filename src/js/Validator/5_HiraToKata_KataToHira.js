@@ -8,7 +8,9 @@
  * @return {string|number|!Date}
  */
 Normalizer_HiraToKataKana = function( currentValue, stringValue ){
-    return currentValue.replace(
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+
+    return str.replace(
         /[\u3041-\u3096]/g,
         function( match ){
             var chr = match.charCodeAt( 0 ) + 0x60;
@@ -27,7 +29,9 @@ Normalizer_HiraToKataKana = function( currentValue, stringValue ){
  * @return {string|number|!Date}
  */
 Normalizer_KataToHiraKana = function( currentValue, stringValue ){
-    return currentValue.replace(
+    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+
+    return str.replace(
         /[\u30a1-\u30f6]/g,
         function( match ){
             var chr = match.charCodeAt( 0 ) - 0x60;
