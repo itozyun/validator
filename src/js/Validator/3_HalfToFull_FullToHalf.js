@@ -8,7 +8,7 @@
  * @return {string|number|!Date}
  */
 Normalizer_HalfToFull = function( currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var str = m_isString( currentValue ) ? currentValue : stringValue;
 
     if( str ){
         return str.replace(
@@ -31,7 +31,7 @@ Normalizer_HalfToFull = function( currentValue, stringValue ){
  * @return {string|number|!Date}
  */
 Normalizer_FullToHalf = function( currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var str = m_isString( currentValue ) ? currentValue : stringValue;
 
     if( str ){
         return str.replace(

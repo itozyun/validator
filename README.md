@@ -19,8 +19,8 @@ validator.getNormalizedValue(formValue);
 ~~~js
 var validator = new StringValidator(
     [
-        StringValidatorHanToZen,
-        StringValidatorKataToHira
+        Normalizer_HalfToFull,
+        Normalizer_KataToHiraKana
     ],
     [
         { gte : 1, lte : 256 }   , '文字列は1文字以上256文字未満です'

@@ -7,7 +7,7 @@
  * @return {string|number|!Date}
  */
 Normalizer_HanKakuKanaToZen = function( currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var str = m_isString( currentValue ) ? currentValue : stringValue;
 
     if( str ){
         for( var i = 0, l = HANKAKU_KANA_LIST.length; i < l; ++i ){
@@ -28,7 +28,7 @@ Normalizer_HanKakuKanaToZen = function( currentValue, stringValue ){
  * @return {string|number|!Date}
  */
 Normalizer_ZenKakuKanaToHan = function( currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var str = m_isString( currentValue ) ? currentValue : stringValue;
 
     if( str ){
         for( var i = 0, l = ZENKAKU_KANA_LIST.length; i < l; ++i ){

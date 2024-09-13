@@ -6,7 +6,7 @@
  * @return {string|number|!Date}
  */
 Normalizer_ToNumberString = function( currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var str = m_isString( currentValue ) ? currentValue : stringValue;
     var NUMBER_CHARS = '.0123456789';
 
     if( str ){
@@ -42,7 +42,7 @@ Normalizer_ToNumberString = function( currentValue, stringValue ){
  * @return {string|number|!Date}
  */
 Normalizer_ToIntegerString = function( currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var str = m_isString( currentValue ) ? currentValue : stringValue;
     var NUMBER_CHARS = '0123456789';
 
     if( str ){
@@ -72,7 +72,7 @@ Normalizer_ToIntegerString = function( currentValue, stringValue ){
  * @return {string|number|!Date}
  */
 Normalizer_ToUINTString = function( currentValue, stringValue ){
-    var str = m_isString( currentValue ) ?  currentValue : stringValue;
+    var str = m_isString( currentValue ) ? currentValue : stringValue;
     var NUMBER_CHARS = '0123456789';
 
     if( str ){
